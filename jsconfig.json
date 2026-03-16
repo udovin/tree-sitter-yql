@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2020",
+    "checkJs": false,
+    "baseUrl": ".",
+    "paths": {
+      "tree-sitter-cli/dsl": ["./node_modules/tree-sitter-cli/dsl"]
+    }
+  },
+  "include": ["grammar.js"],
+  "exclude": ["node_modules", "src", "test"]
+}

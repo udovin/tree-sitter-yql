@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+
+# Build artifacts (native addon)
+build/
+prebuilds/
+*.node
+*.obj
+*.lib
+*.exp
+*.dll
+*.dylib
+*.so
+*.o
+*.a
+
+# WASM build
+*.wasm
+
+# tree-sitter cache
+.cache/
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Binding artifacts (generated on npm install / node-gyp build)
+bindings/
+binding.gyp

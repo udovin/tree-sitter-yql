@@ -1,0 +1,915 @@
+================================================================================
+Simple select literal
+================================================================================
+
+SELECT 1;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (integer_literal))))))
+
+================================================================================
+Select with string
+================================================================================
+
+SELECT 'hello';
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (string_literal
+            (single_quoted_string)))))))
+
+================================================================================
+Select arithmetic expression
+================================================================================
+
+SELECT 2 + 2;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (binary_expression
+            left: (integer_literal)
+            right: (integer_literal)))))))
+
+================================================================================
+Select multiple columns
+================================================================================
+
+SELECT key, value FROM `my_table`;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (identifier
+            (plain_identifier)))
+        (select_item
+          (identifier
+            (plain_identifier))))
+      (from_clause
+        (table_ref
+          (backtick_identifier))))))
+
+================================================================================
+Select with alias
+================================================================================
+
+SELECT key AS k FROM `t` AS tbl;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (identifier
+            (plain_identifier))
+          (identifier
+            (plain_identifier))))
+      (from_clause
+        (table_ref
+          (backtick_identifier)
+          alias: (identifier
+            (plain_identifier)))))))
+
+================================================================================
+Select star
+================================================================================
+
+SELECT * FROM `my_table`;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (asterisk)))
+      (from_clause
+        (table_ref
+          (backtick_identifier))))))
+
+================================================================================
+Where clause
+================================================================================
+
+SELECT * FROM `t` WHERE key > 10;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (asterisk)))
+      (from_clause
+        (table_ref
+          (backtick_identifier)))
+      (where_clause
+        (binary_expression
+          left: (identifier
+            (plain_identifier))
+          right: (integer_literal))))))
+
+================================================================================
+Order by and limit
+================================================================================
+
+SELECT key FROM `t` ORDER BY key DESC LIMIT 10;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (identifier
+            (plain_identifier))))
+      (from_clause
+        (table_ref
+          (backtick_identifier))))
+    (order_by_clause
+      (order_by_item
+        (identifier
+          (plain_identifier))))
+    (limit_clause
+      (integer_literal))))
+
+================================================================================
+Named expression assignment
+================================================================================
+
+$x = 10;
+SELECT $x;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (named_expr_assignment
+    (named_expression)
+    (integer_literal))
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (named_expression))))))
+
+================================================================================
+Null coalesce operator
+================================================================================
+
+SELECT key ?? 0;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (binary_expression
+            left: (identifier
+              (plain_identifier))
+            right: (integer_literal)))))))
+
+================================================================================
+IS NOT NULL
+================================================================================
+
+SELECT * FROM `t` WHERE value IS NOT NULL;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (asterisk)))
+      (from_clause
+        (table_ref
+          (backtick_identifier)))
+      (where_clause
+        (is_null_expression
+          operand: (identifier
+            (plain_identifier)))))))
+
+================================================================================
+BETWEEN expression
+================================================================================
+
+SELECT * FROM `t` WHERE key BETWEEN 10 AND 20;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (asterisk)))
+      (from_clause
+        (table_ref
+          (backtick_identifier)))
+      (where_clause
+        (between_expression
+          value: (identifier
+            (plain_identifier))
+          low: (integer_literal)
+          high: (integer_literal))))))
+
+================================================================================
+IN expression
+================================================================================
+
+SELECT * FROM `t` WHERE key IN (1, 2, 3);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (asterisk)))
+      (from_clause
+        (table_ref
+          (backtick_identifier)))
+      (where_clause
+        (in_expression
+          left: (identifier
+            (plain_identifier))
+          right: (integer_literal)
+          right: (integer_literal)
+          right: (integer_literal))))))
+
+================================================================================
+LIKE expression
+================================================================================
+
+SELECT * FROM `t` WHERE name LIKE 'foo%';
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (asterisk)))
+      (from_clause
+        (table_ref
+          (backtick_identifier)))
+      (where_clause
+        (like_expression
+          left: (identifier
+            (plain_identifier))
+          pattern: (string_literal
+            (single_quoted_string)))))))
+
+================================================================================
+CASE expression
+================================================================================
+
+SELECT CASE WHEN x > 0 THEN 'pos' ELSE 'neg' END;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (case_expression
+            (when_clause
+              condition: (binary_expression
+                left: (identifier
+                  (plain_identifier))
+                right: (integer_literal))
+              result: (string_literal
+                (single_quoted_string)))
+            default: (string_literal
+              (single_quoted_string))))))))
+
+================================================================================
+CAST expression
+================================================================================
+
+SELECT CAST(key AS String);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (cast_expression
+            value: (identifier
+              (plain_identifier))
+            type: (type_expr
+              (simple_type
+                (identifier
+                  (plain_identifier))))))))))
+
+================================================================================
+Lambda short form
+================================================================================
+
+$sq = ($x) -> ($x * $x);
+SELECT $sq(5);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (named_expr_assignment
+    (named_expression)
+    (lambda_expression
+      parameters: (lambda_params
+        (named_expression))
+      body: (binary_expression
+        left: (named_expression)
+        right: (named_expression))))
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (function_call
+            function: (named_expression)
+            (argument_list
+              (integer_literal))))))))
+
+================================================================================
+USE statement
+================================================================================
+
+USE hahn;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (use_statement
+    (identifier
+      (plain_identifier))))
+
+================================================================================
+PRAGMA statement
+================================================================================
+
+PRAGMA yt.InferSchema = '1';
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (pragma_statement
+    (identifier
+      (plain_identifier))
+    (identifier
+      (plain_identifier))
+    (string_literal
+      (single_quoted_string))))
+
+================================================================================
+COMMIT statement
+================================================================================
+
+COMMIT;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (commit_statement))
+
+================================================================================
+Boolean and NULL literals
+================================================================================
+
+SELECT true, false, NULL;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (bool_literal))
+        (select_item
+          (bool_literal))
+        (select_item
+          (null_literal))))))
+
+================================================================================
+Insert into with values
+================================================================================
+
+INSERT INTO `my_table` (key, value)
+VALUES (1, 'one'), (2, 'two');
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (insert_statement
+    (backtick_identifier)
+    (identifier
+      (plain_identifier))
+    (identifier
+      (plain_identifier))
+    (values_statement
+      (values_row
+        (integer_literal)
+        (string_literal
+          (single_quoted_string)))
+      (values_row
+        (integer_literal)
+        (string_literal
+          (single_quoted_string))))))
+
+================================================================================
+Group by with having
+================================================================================
+
+SELECT key, COUNT(*) AS cnt FROM `t` GROUP BY key HAVING COUNT(*) > 5;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (identifier
+            (plain_identifier)))
+        (select_item
+          (function_call
+            function: (identifier
+              (plain_identifier))
+            (argument_list
+              (asterisk)))
+          (identifier
+            (plain_identifier))))
+      (from_clause
+        (table_ref
+          (backtick_identifier)))
+      (group_by_clause
+        (group_by_item
+          (identifier
+            (plain_identifier))))
+      (having_clause
+        (binary_expression
+          left: (function_call
+            function: (identifier
+              (plain_identifier))
+            (argument_list
+              (asterisk)))
+          right: (integer_literal))))))
+
+================================================================================
+Left join
+================================================================================
+
+SELECT a.key, b.val FROM `t1` AS a LEFT JOIN `t2` AS b ON a.key = b.key;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (member_access
+            object: (identifier
+              (plain_identifier))
+            member: (identifier
+              (plain_identifier))))
+        (select_item
+          (member_access
+            object: (identifier
+              (plain_identifier))
+            member: (identifier
+              (plain_identifier)))))
+      (from_clause
+        (table_ref
+          (backtick_identifier)
+          alias: (identifier
+            (plain_identifier)))
+        (join_clause
+          (join_type)
+          (table_ref
+            (backtick_identifier)
+            alias: (identifier
+              (plain_identifier)))
+          (join_constraint
+            (binary_expression
+              left: (member_access
+                object: (identifier
+                  (plain_identifier))
+                member: (identifier
+                  (plain_identifier)))
+              right: (member_access
+                object: (identifier
+                  (plain_identifier))
+                member: (identifier
+                  (plain_identifier))))))))))
+
+================================================================================
+Union all
+================================================================================
+
+SELECT 1 UNION ALL SELECT 2;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (integer_literal))))
+    (select_body
+      (select_list
+        (select_item
+          (integer_literal))))))
+
+================================================================================
+Window function with OVER
+================================================================================
+
+SELECT SUM(value) OVER w FROM `t` WINDOW w AS (ORDER BY key);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (over_expression
+            function: (type_ctor_call
+              type: (identifier
+                (plain_identifier))
+              (identifier
+                (plain_identifier)))
+            window: (identifier
+              (plain_identifier)))))
+      (from_clause
+        (table_ref
+          (backtick_identifier)))
+      (window_clause
+        (window_definition
+          (identifier
+            (plain_identifier))
+          (window_spec
+            (window_order_by
+              (order_by_item
+                (identifier
+                  (plain_identifier))))))))))
+
+================================================================================
+Select distinct
+================================================================================
+
+SELECT DISTINCT key FROM `t`;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (identifier
+            (plain_identifier))))
+      (from_clause
+        (table_ref
+          (backtick_identifier))))))
+
+================================================================================
+Export statement
+================================================================================
+
+EXPORT $foo;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (export_statement
+    (named_expression)))
+
+================================================================================
+Line comment
+================================================================================
+
+-- this is a comment
+SELECT 1;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (line_comment)
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (integer_literal))))))
+
+================================================================================
+Block comment
+================================================================================
+
+/* multi
+   line */
+SELECT 1;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (block_comment)
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (integer_literal))))))
+
+================================================================================
+Multiline string literal
+================================================================================
+
+$text = @@some
+multiline@@;
+SELECT $text;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (named_expr_assignment
+    (named_expression)
+    (string_literal
+      (multiline_string)))
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (named_expression))))))
+
+================================================================================
+Float and typed integer literals
+================================================================================
+
+SELECT 3.14f, 0xFFul, 42ut;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (float_literal))
+        (select_item
+          (integer_literal))
+        (select_item
+          (integer_literal))))))
+
+================================================================================
+Flatten by
+================================================================================
+
+SELECT value, id FROM `t` FLATTEN BY (value);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (identifier
+            (plain_identifier)))
+        (select_item
+          (identifier
+            (plain_identifier))))
+      (from_clause
+        (table_ref
+          (backtick_identifier)))
+      (flatten_clause
+        (flatten_by_item
+          (parenthesized_expression
+            (identifier
+              (plain_identifier))))))))
+
+================================================================================
+Process statement
+================================================================================
+
+PROCESS `my_table` USING MyUdf::Process(value);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (process_statement
+    (table_ref
+      (backtick_identifier))
+    (identifier
+      (plain_identifier))
+    (identifier
+      (plain_identifier))
+    (identifier
+      (plain_identifier))))
+
+================================================================================
+Define action and do
+================================================================================
+
+DEFINE ACTION $act($p) AS
+    SELECT $p;
+END DEFINE;
+DO $act('x');
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (define_action_statement
+    (named_expression)
+    (action_param
+      (named_expression))
+    (select_statement
+      (select_body
+        (select_list
+          (select_item
+            (named_expression))))))
+  (do_statement
+    (named_expression)
+    (string_literal
+      (single_quoted_string))))
+
+================================================================================
+Subquery in FROM
+================================================================================
+
+SELECT * FROM (SELECT 1 AS x) AS sub;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (asterisk)))
+      (from_clause
+        (subquery_expression
+          (select_statement
+            (select_body
+              (select_list
+                (select_item
+                  (integer_literal)
+                  (identifier
+                    (plain_identifier)))))))
+        alias: (identifier
+          (plain_identifier))))))
+
+================================================================================
+Tuple unpacking
+================================================================================
+
+$a, $b, $c = AsTuple(1, 2, 3);
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (named_expr_assignment
+    (named_expression)
+    (named_expression)
+    (named_expression)
+    (type_ctor_call
+      type: (identifier
+        (plain_identifier))
+      (integer_literal)
+      (integer_literal)
+      (integer_literal))))
+
+================================================================================
+String concatenation
+================================================================================
+
+SELECT 'a' || 'b';
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (select_statement
+    (select_body
+      (select_list
+        (select_item
+          (binary_expression
+            left: (string_literal
+              (single_quoted_string))
+            right: (string_literal
+              (single_quoted_string))))))))
+
+================================================================================
+Drop table if exists
+================================================================================
+
+DROP TABLE IF EXISTS `tmp/table`;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (drop_table_statement
+    (backtick_identifier)))
+
+================================================================================
+Insert into with TRUNCATE modifier
+================================================================================
+
+INSERT INTO `t` WITH TRUNCATE
+SELECT 1;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (insert_statement
+    (backtick_identifier)
+    (with_table_settings
+      (table_setting
+        (identifier
+          (plain_identifier))))
+    (select_statement
+      (select_body
+        (select_list
+          (select_item
+            (integer_literal)))))))
+
+================================================================================
+Insert into with multiple modifiers in parentheses
+================================================================================
+
+INSERT INTO `t` WITH (TRUNCATE, EXPIRATION="15m")
+SELECT 1;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (insert_statement
+    (backtick_identifier)
+    (with_table_settings
+      (table_setting
+        (identifier
+          (plain_identifier)))
+      (table_setting
+        (identifier
+          (plain_identifier))
+        (string_literal
+          (double_quoted_string))))
+    (select_statement
+      (select_body
+        (select_list
+          (select_item
+            (integer_literal)))))))
+
+================================================================================
+Insert into with key=value modifier
+================================================================================
+
+INSERT INTO `t` WITH REPLICATION_FACTOR=3
+SELECT 1;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (insert_statement
+    (backtick_identifier)
+    (with_table_settings
+      (table_setting
+        (identifier
+          (plain_identifier))
+        (integer_literal)))
+    (select_statement
+      (select_body
+        (select_list
+          (select_item
+            (integer_literal)))))))

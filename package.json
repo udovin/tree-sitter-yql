@@ -1,0 +1,60 @@
+{
+  "name": "tree-sitter-yql",
+  "version": "0.1.0",
+  "description": "Tree-sitter grammar for YTsaurus YQL query language",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/udovin/tree-sitter-yql.git"
+  },
+  "license": "MIT",
+  "author": "wilcot",
+  "main": "bindings/node",
+  "keywords": [
+    "tree-sitter",
+    "parser",
+    "yql",
+    "ytsaurus",
+    "sql"
+  ],
+  "files": [
+    "grammar.js",
+    "binding.gyp",
+    "prebuilds/**",
+    "bindings/node/*",
+    "queries/*",
+    "src/**"
+  ],
+  "dependencies": {
+    "node-addon-api": "^8.3.1",
+    "node-gyp-build": "^4.8.4"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.25.10"
+  },
+  "peerDependencies": {
+    "tree-sitter": "^0.22.4"
+  },
+  "peerDependenciesMeta": {
+    "tree-sitter": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "build": "tree-sitter generate && node-gyp build",
+    "generate": "tree-sitter generate",
+    "test": "tree-sitter test",
+    "parse": "tree-sitter parse"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.yql",
+      "injection-regex": "^yql$",
+      "file-types": [
+        "yql",
+        "sql"
+      ],
+      "highlights": "queries/highlights.scm",
+      "locals": "queries/locals.scm"
+    }
+  ]
+}
