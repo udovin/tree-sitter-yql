@@ -863,7 +863,7 @@ module.exports = grammar({
         optional($.window_clause),
       ),
 
-    select_list: ($) => commaSep1($.select_item),
+    select_list: ($) => seq(commaSep1($.select_item), optional(",")),
 
     select_item: ($) =>
       choice(
