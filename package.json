@@ -7,7 +7,7 @@
     "url": "https://github.com/udovin/tree-sitter-yql.git"
   },
   "license": "MIT",
-  "author": "wilcot",
+  "author": "Ivan Udovin",
   "main": "bindings/node",
   "keywords": [
     "tree-sitter",
