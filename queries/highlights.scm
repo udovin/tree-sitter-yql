@@ -34,8 +34,6 @@
 ; Identifiers
 ; ---------------------------------------------------------------------------
 
-; Default: everything is a variable
-(plain_identifier) @variable
 (backtick_identifier) @string.special
 
 ; Named expressions: $foo, $_bar

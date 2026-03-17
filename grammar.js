@@ -539,6 +539,7 @@ module.exports = grammar({
     _argument: ($) =>
       choice(
         seq($.expression, kw("AS"), $.identifier),
+        seq(choice(kw("DISTINCT"), kw("ALL")), $.expression),
         $.expression,
         $.asterisk,
       ),
