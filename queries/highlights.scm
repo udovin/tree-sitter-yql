@@ -335,6 +335,7 @@
 
 (binary_expression operator: _ @operator)
 (unary_expression operator: _ @operator)
+(named_expr_assignment "=" @operator)
 
 (asterisk) @operator
 
@@ -347,6 +348,14 @@
 
 (member_access
   member: (integer_literal) @property)
+
+; Table alias before .* in SELECT (e.g. t.*)
+(select_item
+  (identifier (plain_identifier) @variable) . "." . (asterisk))
+
+; Table alias in WITHOUT column (e.g. t2.a)
+(without_column
+  (identifier (plain_identifier) @variable) . "." . (identifier))
 
 ; ---------------------------------------------------------------------------
 ; Lambda
