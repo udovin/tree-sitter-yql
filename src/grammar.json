@@ -1733,10 +1733,6 @@
         },
         {
           "type": "SYMBOL",
-          "name": "type_ctor_call"
-        },
-        {
-          "type": "SYMBOL",
           "name": "member_access"
         },
         {
@@ -2492,56 +2488,6 @@
           "value": ")"
         }
       ]
-    },
-    "type_ctor_call": {
-      "type": "PREC",
-      "value": 14,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "FIELD",
-            "name": "type",
-            "content": {
-              "type": "SYMBOL",
-              "name": "identifier"
-            }
-          },
-          {
-            "type": "STRING",
-            "value": "("
-          },
-          {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "expression"
-              },
-              {
-                "type": "REPEAT",
-                "content": {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "STRING",
-                      "value": ","
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "expression"
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          {
-            "type": "STRING",
-            "value": ")"
-          }
-        ]
-      }
     },
     "member_access": {
       "type": "PREC_LEFT",
@@ -10513,10 +10459,6 @@
     ],
     [
       "window_definition"
-    ],
-    [
-      "function_call",
-      "type_ctor_call"
     ],
     [
       "table_ref"

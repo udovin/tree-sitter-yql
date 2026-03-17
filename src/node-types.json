@@ -136,10 +136,6 @@
         "named": true
       },
       {
-        "type": "type_ctor_call",
-        "named": true
-      },
-      {
         "type": "unary_expression",
         "named": true
       }
@@ -2407,32 +2403,6 @@
       "types": [
         {
           "type": "type_expr",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "type_ctor_call",
-    "named": true,
-    "fields": {
-      "type": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "expression",
           "named": true
         }
       ]

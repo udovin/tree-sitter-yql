@@ -105,8 +105,7 @@ module.exports = grammar({
     [$.flatten_by_item],
     // WINDOW w AS (…)
     [$.window_definition],
-    // function_call vs type_ctor (both identifier + "(")
-    [$.function_call, $.type_ctor_call],
+
     // ambiguity between table_ref and expression starting with identifier
     [$.table_ref],
     // identifier vs table_ref (backtick_identifier / plain_identifier starting both)
@@ -469,7 +468,6 @@ module.exports = grammar({
         $.named_expression,
         $.identifier,
         $.function_call,
-        $.type_ctor_call,
         $.member_access,
         $.subscript_access,
         $.parenthesized_expression,
@@ -567,13 +565,6 @@ module.exports = grammar({
     grouping_call: ($) =>
       seq(kw("GROUPING"), "(", commaSep1($.expression), ")"),
     empty_action_literal: () => seq(kw("EMPTY_ACTION"), "(", ")"),
-
-    // Type constructor: PgInt4(expr), PgBool("true"), etc.
-    type_ctor_call: ($) =>
-      prec(
-        PREC.ACCESS,
-        seq(field("type", $.identifier), "(", commaSep1($.expression), ")"),
-      ),
 
     // ---- Member access: e.field or e.0 ----
     member_access: ($) =>

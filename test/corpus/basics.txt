@@ -567,11 +567,12 @@ SELECT SUM(value) OVER w FROM `t` WINDOW w AS (ORDER BY key);
       (select_list
         (select_item
           (over_expression
-            function: (type_ctor_call
-              type: (identifier
+            function: (function_call
+              function: (identifier
                 (plain_identifier))
-              (identifier
-                (plain_identifier)))
+              (argument_list
+                (identifier
+                  (plain_identifier))))
             window: (identifier
               (plain_identifier)))))
       (from_clause
@@ -804,12 +805,13 @@ $a, $b, $c = AsTuple(1, 2, 3);
     (named_expression)
     (named_expression)
     (named_expression)
-    (type_ctor_call
-      type: (identifier
+    (function_call
+      function: (identifier
         (plain_identifier))
-      (integer_literal)
-      (integer_literal)
-      (integer_literal))))
+      (argument_list
+        (integer_literal)
+        (integer_literal)
+        (integer_literal)))))
 
 ================================================================================
 String concatenation

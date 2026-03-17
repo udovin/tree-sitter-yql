@@ -233,16 +233,12 @@
 
 ; Module::Function — Module part
 (function_call
-  function: (identifier) @module . "::" . (identifier (plain_identifier) @function))
+  function: (identifier (plain_identifier) @module) . "::" . (identifier (plain_identifier) @function))
 
 ; Window function (OVER expression) — function part already captured above
 ; The window name reference:
 (over_expression
   window: (identifier (plain_identifier) @variable))
-
-; Type constructor call
-(type_ctor_call
-  type: (identifier (plain_identifier) @type))
 
 ; Special pseudo-functions
 (table_row_call) @function.builtin
@@ -346,7 +342,7 @@
 ; ---------------------------------------------------------------------------
 
 (member_access
-  member: (identifier (plain_identifier) @property))
+  object: (identifier (plain_identifier) @variable))
 
 (member_access
   member: (integer_literal) @property)
@@ -376,7 +372,14 @@
 
 ; Table alias
 (table_ref
-  alias: (identifier (plain_identifier) @variable))
+  alias: (identifier (plain_identifier) @label))
+
+; Subquery / named-expression alias (inlined from _table_or_subquery)
+(from_clause
+  alias: (identifier (plain_identifier) @label))
+
+(join_clause
+  alias: (identifier (plain_identifier) @label))
 
 ; ---------------------------------------------------------------------------
 ; Punctuation
