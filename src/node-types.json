@@ -2007,6 +2007,10 @@
         {
           "type": "window_clause",
           "named": true
+        },
+        {
+          "type": "without_clause",
+          "named": true
         }
       ]
     }
@@ -2021,10 +2025,6 @@
       "types": [
         {
           "type": "expression",
-          "named": true
-        },
-        {
-          "type": "without_clause",
           "named": true
         }
       ]

@@ -857,6 +857,7 @@ module.exports = grammar({
         kw("SELECT"),
         optional(choice(kw("DISTINCT"), kw("ALL"))),
         $.select_list,
+        optional($.without_clause),
         optional($.from_clause),
         optional($.flatten_clause),
         optional($.where_clause),
@@ -869,13 +870,8 @@ module.exports = grammar({
 
     select_item: ($) =>
       choice(
-        seq($.asterisk, optional($.without_clause)),
-        seq(
-          choice($.identifier, $.named_expression),
-          ".",
-          $.asterisk,
-          optional($.without_clause),
-        ),
+        $.asterisk,
+        seq(choice($.identifier, $.named_expression), ".", $.asterisk),
         seq($.expression, optional(seq(optional(kw("AS")), $.identifier))),
       ),
 
