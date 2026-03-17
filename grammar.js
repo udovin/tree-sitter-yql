@@ -15,18 +15,21 @@
  * Returns a RegExp that matches each letter in either case.
  */
 function kw(word) {
-  return token(
-    prec(
-      1,
-      new RegExp(
-        word
-          .split("")
-          .map((c) =>
-            /[a-zA-Z]/.test(c) ? `[${c.toLowerCase()}${c.toUpperCase()}]` : c,
-          )
-          .join(""),
+  return alias(
+    token(
+      prec(
+        1,
+        new RegExp(
+          word
+            .split("")
+            .map((c) =>
+              /[a-zA-Z]/.test(c) ? `[${c.toLowerCase()}${c.toUpperCase()}]` : c,
+            )
+            .join(""),
+        ),
       ),
     ),
+    word,
   );
 }
 

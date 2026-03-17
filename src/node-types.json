@@ -424,6 +424,18 @@
             "named": false
           },
           {
+            "type": "AND",
+            "named": false
+          },
+          {
+            "type": "OR",
+            "named": false
+          },
+          {
+            "type": "XOR",
+            "named": false
+          },
+          {
             "type": "^",
             "named": false
           },
@@ -579,6 +591,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "commit_statement",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "create_table_statement",
@@ -1503,6 +1520,32 @@
           {
             "type": "expression",
             "named": true
+          }
+        ]
+      },
+      "operator": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "ILIKE",
+            "named": false
+          },
+          {
+            "type": "LIKE",
+            "named": false
+          },
+          {
+            "type": "MATCH",
+            "named": false
+          },
+          {
+            "type": "REGEXP",
+            "named": false
+          },
+          {
+            "type": "RLIKE",
+            "named": false
           }
         ]
       },
@@ -2485,6 +2528,10 @@
             "named": false
           },
           {
+            "type": "NOT",
+            "named": false
+          },
+          {
             "type": "~",
             "named": false
           }
@@ -2805,6 +2852,578 @@
     "named": false
   },
   {
+    "type": "ACTION",
+    "named": false
+  },
+  {
+    "type": "ALL",
+    "named": false
+  },
+  {
+    "type": "AND",
+    "named": false
+  },
+  {
+    "type": "ANY",
+    "named": false
+  },
+  {
+    "type": "AS",
+    "named": false
+  },
+  {
+    "type": "ASC",
+    "named": false
+  },
+  {
+    "type": "ASSUME",
+    "named": false
+  },
+  {
+    "type": "ASYMMETRIC",
+    "named": false
+  },
+  {
+    "type": "AS_TABLE",
+    "named": false
+  },
+  {
+    "type": "BEGIN",
+    "named": false
+  },
+  {
+    "type": "BERNOULLI",
+    "named": false
+  },
+  {
+    "type": "BETWEEN",
+    "named": false
+  },
+  {
+    "type": "BITCAST",
+    "named": false
+  },
+  {
+    "type": "BY",
+    "named": false
+  },
+  {
+    "type": "CASE",
+    "named": false
+  },
+  {
+    "type": "CAST",
+    "named": false
+  },
+  {
+    "type": "COLUMNS",
+    "named": false
+  },
+  {
+    "type": "COMMIT",
+    "named": false
+  },
+  {
+    "type": "CONCAT",
+    "named": false
+  },
+  {
+    "type": "CONCAT_STRICT",
+    "named": false
+  },
+  {
+    "type": "CREATE",
+    "named": false
+  },
+  {
+    "type": "CROSS",
+    "named": false
+  },
+  {
+    "type": "CUBE",
+    "named": false
+  },
+  {
+    "type": "CURRENT",
+    "named": false
+  },
+  {
+    "type": "Callable",
+    "named": false
+  },
+  {
+    "type": "DECLARE",
+    "named": false
+  },
+  {
+    "type": "DEFINE",
+    "named": false
+  },
+  {
+    "type": "DESC",
+    "named": false
+  },
+  {
+    "type": "DICT",
+    "named": false
+  },
+  {
+    "type": "DISCARD",
+    "named": false
+  },
+  {
+    "type": "DISTINCT",
+    "named": false
+  },
+  {
+    "type": "DO",
+    "named": false
+  },
+  {
+    "type": "DROP",
+    "named": false
+  },
+  {
+    "type": "Dict",
+    "named": false
+  },
+  {
+    "type": "EACH",
+    "named": false
+  },
+  {
+    "type": "EACH_STRICT",
+    "named": false
+  },
+  {
+    "type": "ELSE",
+    "named": false
+  },
+  {
+    "type": "EMPTY_ACTION",
+    "named": false
+  },
+  {
+    "type": "END",
+    "named": false
+  },
+  {
+    "type": "ESCAPE",
+    "named": false
+  },
+  {
+    "type": "EVALUATE",
+    "named": false
+  },
+  {
+    "type": "EXCEPT",
+    "named": false
+  },
+  {
+    "type": "EXCLUSION",
+    "named": false
+  },
+  {
+    "type": "EXISTS",
+    "named": false
+  },
+  {
+    "type": "EXPORT",
+    "named": false
+  },
+  {
+    "type": "Enum",
+    "named": false
+  },
+  {
+    "type": "FALSE",
+    "named": false
+  },
+  {
+    "type": "FILTER",
+    "named": false
+  },
+  {
+    "type": "FILTER_STRICT",
+    "named": false
+  },
+  {
+    "type": "FIRST",
+    "named": false
+  },
+  {
+    "type": "FLATTEN",
+    "named": false
+  },
+  {
+    "type": "FOLDER",
+    "named": false
+  },
+  {
+    "type": "FOLLOWING",
+    "named": false
+  },
+  {
+    "type": "FOR",
+    "named": false
+  },
+  {
+    "type": "FROM",
+    "named": false
+  },
+  {
+    "type": "FULL",
+    "named": false
+  },
+  {
+    "type": "GROUP",
+    "named": false
+  },
+  {
+    "type": "GROUPING",
+    "named": false
+  },
+  {
+    "type": "HAVING",
+    "named": false
+  },
+  {
+    "type": "IF",
+    "named": false
+  },
+  {
+    "type": "ILIKE",
+    "named": false
+  },
+  {
+    "type": "IMPORT",
+    "named": false
+  },
+  {
+    "type": "IN",
+    "named": false
+  },
+  {
+    "type": "INNER",
+    "named": false
+  },
+  {
+    "type": "INSERT",
+    "named": false
+  },
+  {
+    "type": "INTERSECT",
+    "named": false
+  },
+  {
+    "type": "INTO",
+    "named": false
+  },
+  {
+    "type": "IS",
+    "named": false
+  },
+  {
+    "type": "JOIN",
+    "named": false
+  },
+  {
+    "type": "KEY",
+    "named": false
+  },
+  {
+    "type": "LAST",
+    "named": false
+  },
+  {
+    "type": "LEFT",
+    "named": false
+  },
+  {
+    "type": "LIKE",
+    "named": false
+  },
+  {
+    "type": "LIMIT",
+    "named": false
+  },
+  {
+    "type": "LIST",
+    "named": false
+  },
+  {
+    "type": "List",
+    "named": false
+  },
+  {
+    "type": "MATCH",
+    "named": false
+  },
+  {
+    "type": "NOT",
+    "named": false
+  },
+  {
+    "type": "NULL",
+    "named": false
+  },
+  {
+    "type": "NULLS",
+    "named": false
+  },
+  {
+    "type": "OFFSET",
+    "named": false
+  },
+  {
+    "type": "ON",
+    "named": false
+  },
+  {
+    "type": "ONLY",
+    "named": false
+  },
+  {
+    "type": "OPTIONAL",
+    "named": false
+  },
+  {
+    "type": "OR",
+    "named": false
+  },
+  {
+    "type": "ORDER",
+    "named": false
+  },
+  {
+    "type": "OUTER",
+    "named": false
+  },
+  {
+    "type": "OVER",
+    "named": false
+  },
+  {
+    "type": "Optional",
+    "named": false
+  },
+  {
+    "type": "PARTITION",
+    "named": false
+  },
+  {
+    "type": "PRAGMA",
+    "named": false
+  },
+  {
+    "type": "PRECEDING",
+    "named": false
+  },
+  {
+    "type": "PRESORT",
+    "named": false
+  },
+  {
+    "type": "PRIMARY",
+    "named": false
+  },
+  {
+    "type": "PROCESS",
+    "named": false
+  },
+  {
+    "type": "RANGE",
+    "named": false
+  },
+  {
+    "type": "RANGE_STRICT",
+    "named": false
+  },
+  {
+    "type": "REDUCE",
+    "named": false
+  },
+  {
+    "type": "REGEXP",
+    "named": false
+  },
+  {
+    "type": "REPEATABLE",
+    "named": false
+  },
+  {
+    "type": "REPLACE",
+    "named": false
+  },
+  {
+    "type": "RESULT",
+    "named": false
+  },
+  {
+    "type": "RETURN",
+    "named": false
+  },
+  {
+    "type": "RIGHT",
+    "named": false
+  },
+  {
+    "type": "RLIKE",
+    "named": false
+  },
+  {
+    "type": "ROLLUP",
+    "named": false
+  },
+  {
+    "type": "ROW",
+    "named": false
+  },
+  {
+    "type": "ROWS",
+    "named": false
+  },
+  {
+    "type": "Resource",
+    "named": false
+  },
+  {
+    "type": "SAMPLE",
+    "named": false
+  },
+  {
+    "type": "SELECT",
+    "named": false
+  },
+  {
+    "type": "SEMI",
+    "named": false
+  },
+  {
+    "type": "SETS",
+    "named": false
+  },
+  {
+    "type": "SUBQUERY",
+    "named": false
+  },
+  {
+    "type": "SYMBOLS",
+    "named": false
+  },
+  {
+    "type": "SYMMETRIC",
+    "named": false
+  },
+  {
+    "type": "SYSTEM",
+    "named": false
+  },
+  {
+    "type": "SessionWindow",
+    "named": false
+  },
+  {
+    "type": "Set",
+    "named": false
+  },
+  {
+    "type": "Stream",
+    "named": false
+  },
+  {
+    "type": "Struct",
+    "named": false
+  },
+  {
+    "type": "TABLE",
+    "named": false
+  },
+  {
+    "type": "TABLESAMPLE",
+    "named": false
+  },
+  {
+    "type": "TEMPORARY",
+    "named": false
+  },
+  {
+    "type": "THEN",
+    "named": false
+  },
+  {
+    "type": "TRUE",
+    "named": false
+  },
+  {
+    "type": "TableRow",
+    "named": false
+  },
+  {
+    "type": "TableRows",
+    "named": false
+  },
+  {
+    "type": "Tagged",
+    "named": false
+  },
+  {
+    "type": "Tuple",
+    "named": false
+  },
+  {
+    "type": "UNBOUNDED",
+    "named": false
+  },
+  {
+    "type": "UNION",
+    "named": false
+  },
+  {
+    "type": "USE",
+    "named": false
+  },
+  {
+    "type": "USING",
+    "named": false
+  },
+  {
+    "type": "VALUES",
+    "named": false
+  },
+  {
+    "type": "VIEW",
+    "named": false
+  },
+  {
+    "type": "Variant",
+    "named": false
+  },
+  {
+    "type": "WHEN",
+    "named": false
+  },
+  {
+    "type": "WHERE",
+    "named": false
+  },
+  {
+    "type": "WINDOW",
+    "named": false
+  },
+  {
+    "type": "WITH",
+    "named": false
+  },
+  {
+    "type": "WalkFolders",
+    "named": false
+  },
+  {
+    "type": "XOR",
+    "named": false
+  },
+  {
     "type": "[",
     "named": false
   },
@@ -2830,8 +3449,8 @@
     "extra": true
   },
   {
-    "type": "commit_statement",
-    "named": true
+    "type": "default",
+    "named": false
   },
   {
     "type": "double_quoted_string",

@@ -42,31 +42,184 @@
 (named_expression) @variable.special
 
 ; ---------------------------------------------------------------------------
-; Keywords — node-level highlighting
-;
-; We mark entire keyword-only nodes and use field-based queries on container
-; nodes to highlight specific keyword positions. Anonymous tokens from kw()
-; cannot be captured, but the *node types* that contain only keywords can be.
+; Keywords — anonymous token matching (via alias in grammar's kw() helper)
 ; ---------------------------------------------------------------------------
 
-; JOIN type node is entirely keywords (LEFT, RIGHT, INNER, FULL, CROSS, etc.)
+; DML / DQL
+"SELECT" @keyword
+"FROM" @keyword
+"WHERE" @keyword
+"GROUP" @keyword
+"BY" @keyword
+"HAVING" @keyword
+"WINDOW" @keyword
+"ORDER" @keyword
+"LIMIT" @keyword
+"OFFSET" @keyword
+"UNION" @keyword
+"INTERSECT" @keyword
+"EXCEPT" @keyword
+"ALL" @keyword
+"DISTINCT" @keyword
+"AS" @keyword
+"INTO" @keyword
+"RESULT" @keyword
+"DISCARD" @keyword
+"VALUES" @keyword
+"INSERT" @keyword
+"REPLACE" @keyword
+
+; JOIN
+"JOIN" @keyword
+"INNER" @keyword
+"LEFT" @keyword
+"RIGHT" @keyword
+"FULL" @keyword
+"OUTER" @keyword
+"SEMI" @keyword
+"ONLY" @keyword
+"CROSS" @keyword
+"EXCLUSION" @keyword
+"ON" @keyword
+"USING" @keyword
+"ANY" @keyword
+
+; DDL
+"CREATE" @keyword
+"TEMPORARY" @keyword
+"TABLE" @keyword
+"DROP" @keyword
+"PRIMARY" @keyword
+"KEY" @keyword
+
+; Operators as keywords
+"NOT" @keyword
+"AND" @keyword
+"OR" @keyword
+"XOR" @keyword
+"IN" @keyword
+"BETWEEN" @keyword
+"SYMMETRIC" @keyword
+"ASYMMETRIC" @keyword
+"LIKE" @keyword
+"ILIKE" @keyword
+"REGEXP" @keyword
+"RLIKE" @keyword
+"MATCH" @keyword
+"ESCAPE" @keyword
+"IS" @keyword
+"EXISTS" @keyword
+
+; CASE expression
+"CASE" @keyword
+"WHEN" @keyword
+"THEN" @keyword
+"ELSE" @keyword
+"END" @keyword
+
+; CAST / BITCAST
+"CAST" @keyword
+"BITCAST" @keyword
+
+; OVER / WINDOW spec
+"OVER" @keyword
+"PARTITION" @keyword
+"ROWS" @keyword
+"UNBOUNDED" @keyword
+"PRECEDING" @keyword
+"FOLLOWING" @keyword
+"CURRENT" @keyword
+"ROW" @keyword
+
+; ORDER BY modifiers
+"ASC" @keyword
+"DESC" @keyword
+"NULLS" @keyword
+"FIRST" @keyword
+"LAST" @keyword
+"ASSUME" @keyword
+
+; FLATTEN
+"FLATTEN" @keyword
+"COLUMNS" @keyword
+"LIST" @keyword
+"DICT" @keyword
+"OPTIONAL" @keyword
+
+; SAMPLE
+"SAMPLE" @keyword
+"TABLESAMPLE" @keyword
+"BERNOULLI" @keyword
+"SYSTEM" @keyword
+"REPEATABLE" @keyword
+
+; TABLE functions
+"CONCAT" @keyword
+"CONCAT_STRICT" @keyword
+"EACH" @keyword
+"EACH_STRICT" @keyword
+"RANGE" @keyword
+"RANGE_STRICT" @keyword
+"FILTER" @keyword
+"FILTER_STRICT" @keyword
+"FOLDER" @keyword
+"WalkFolders" @keyword
+
+; WITH / VIEW / TABLE settings
+"WITH" @keyword
+"VIEW" @keyword
+"AS_TABLE" @keyword
+
+; ROLLUP / CUBE / GROUPING SETS
+"ROLLUP" @keyword
+"CUBE" @keyword
+"SETS" @keyword
+
+; Misc statements
+"USE" @keyword
+"PRAGMA" @keyword
+"DECLARE" @keyword
+"COMMIT" @keyword
+"IF" @keyword
+
+; DEFINE / DO / EVALUATE
+"DEFINE" @keyword
+"ACTION" @keyword
+"SUBQUERY" @keyword
+"DO" @keyword
+"BEGIN" @keyword
+"EVALUATE" @keyword
+"FOR" @keyword
+"RETURN" @keyword
+"EMPTY_ACTION" @keyword
+
+; EXPORT / IMPORT
+"EXPORT" @keyword
+"IMPORT" @keyword
+"SYMBOLS" @keyword
+
+; PROCESS / REDUCE
+"PROCESS" @keyword
+"REDUCE" @keyword
+"PRESORT" @keyword
+
+; Pseudo-functions as keywords
+"TableRow" @keyword
+"TableRows" @keyword
+"GROUPING" @keyword
+"SessionWindow" @keyword
+
+; Pragma default value
+"default" @keyword
+
+; Boolean / null constants (override keyword with @constant.builtin)
+"TRUE" @constant.builtin
+"FALSE" @constant.builtin
+"NULL" @constant.builtin
+
+; Join type node (covers combined join keywords)
 (join_type) @keyword
-
-; COMMIT is a single-keyword statement
 (commit_statement) @keyword
-
-; ---------------------------------------------------------------------------
-; Statements that act as keyword anchors — we highlight relevant children
-; by overriding specific identifiers that are really keywords.
-; ---------------------------------------------------------------------------
-
-; SELECT body — the "SELECT" keyword is anonymous; we style the select_body
-; start via its first visible child if needed. Most editors will fall back to
-; the token theme. For full keyword coverage we annotate select_item aliases.
-
-(select_item
-  (identifier (plain_identifier) @keyword)
-  (#eq? @keyword "AS"))
 
 ; ---------------------------------------------------------------------------
 ; Functions
