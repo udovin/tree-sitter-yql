@@ -144,6 +144,8 @@ module.exports = grammar({
     [$._select_core],
     // select_statement: DISCARD / UNION / ORDER BY lookahead
     [$.select_statement],
+    // without_column: identifier vs identifier.identifier
+    [$.without_clause],
   ],
 
   supertypes: ($) => [$.statement, $.expression],
@@ -867,10 +869,25 @@ module.exports = grammar({
 
     select_item: ($) =>
       choice(
-        $.asterisk,
-        seq(choice($.identifier, $.named_expression), ".", $.asterisk),
+        seq($.asterisk, optional($.without_clause)),
+        seq(
+          choice($.identifier, $.named_expression),
+          ".",
+          $.asterisk,
+          optional($.without_clause),
+        ),
         seq($.expression, optional(seq(optional(kw("AS")), $.identifier))),
       ),
+
+    without_clause: ($) =>
+      seq(
+        kw("WITHOUT"),
+        optional(seq(kw("IF"), kw("EXISTS"))),
+        commaSep1($.without_column),
+      ),
+
+    without_column: ($) =>
+      choice(seq($.identifier, ".", $.identifier), $.identifier),
 
     // ---- FROM ----
     from_clause: ($) =>

@@ -63,6 +63,7 @@
 "INTO" @keyword
 "RESULT" @keyword
 "DISCARD" @keyword
+"WITHOUT" @keyword
 "VALUES" @keyword
 "INSERT" @keyword
 "REPLACE" @keyword

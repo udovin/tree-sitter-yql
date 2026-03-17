@@ -2022,6 +2022,10 @@
         {
           "type": "expression",
           "named": true
+        },
+        {
+          "type": "without_clause",
+          "named": true
         }
       ]
     }
@@ -2696,6 +2700,36 @@
       "types": [
         {
           "type": "table_setting",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "without_clause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "without_column",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "without_column",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
           "named": true
         }
       ]
@@ -3383,6 +3417,10 @@
   },
   {
     "type": "WITH",
+    "named": false
+  },
+  {
+    "type": "WITHOUT",
     "named": false
   },
   {
