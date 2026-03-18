@@ -859,9 +859,7 @@ module.exports = grammar({
 
     select_body: ($) =>
       seq(
-        kw("SELECT"),
-        optional(choice(kw("DISTINCT"), kw("ALL"))),
-        $.select_list,
+        $.select_clause,
         optional($.without_clause),
         optional($.from_clause),
         optional($.flatten_clause),
@@ -869,6 +867,13 @@ module.exports = grammar({
         optional($.group_by_clause),
         optional($.having_clause),
         optional($.window_clause),
+      ),
+
+    select_clause: ($) =>
+      seq(
+        kw("SELECT"),
+        optional(choice(kw("DISTINCT"), kw("ALL"))),
+        $.select_list,
       ),
 
     select_list: ($) => seq(commaSep1($.select_item), optional(",")),

@@ -9,9 +9,10 @@ SELECT 1;
 (source_file
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (integer_literal))))))
+      (select_clause
+        (select_list
+          (select_item
+            (integer_literal)))))))
 
 ================================================================================
 Select with string
@@ -24,10 +25,11 @@ SELECT 'hello';
 (source_file
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (string_literal
-            (single_quoted_string)))))))
+      (select_clause
+        (select_list
+          (select_item
+            (string_literal
+              (single_quoted_string))))))))
 
 ================================================================================
 Select arithmetic expression
@@ -40,11 +42,12 @@ SELECT 2 + 2;
 (source_file
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (binary_expression
-            left: (integer_literal)
-            right: (integer_literal)))))))
+      (select_clause
+        (select_list
+          (select_item
+            (binary_expression
+              left: (integer_literal)
+              right: (integer_literal))))))))
 
 ================================================================================
 Select multiple columns
@@ -57,13 +60,14 @@ SELECT key, value FROM `my_table`;
 (source_file
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (identifier
-            (plain_identifier)))
-        (select_item
-          (identifier
-            (plain_identifier))))
+      (select_clause
+        (select_list
+          (select_item
+            (identifier
+              (plain_identifier)))
+          (select_item
+            (identifier
+              (plain_identifier)))))
       (from_clause
         (table_ref
           (backtick_identifier))))))
@@ -79,12 +83,13 @@ SELECT key AS k FROM `t` AS tbl;
 (source_file
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (identifier
-            (plain_identifier))
-          (identifier
-            (plain_identifier))))
+      (select_clause
+        (select_list
+          (select_item
+            (identifier
+              (plain_identifier))
+            (identifier
+              (plain_identifier)))))
       (from_clause
         (table_ref
           (backtick_identifier)
@@ -102,9 +107,10 @@ SELECT * FROM `my_table`;
 (source_file
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (asterisk)))
+      (select_clause
+        (select_list
+          (select_item
+            (asterisk))))
       (from_clause
         (table_ref
           (backtick_identifier))))))
@@ -120,9 +126,10 @@ SELECT * FROM `t` WHERE key > 10;
 (source_file
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (asterisk)))
+      (select_clause
+        (select_list
+          (select_item
+            (asterisk))))
       (from_clause
         (table_ref
           (backtick_identifier)))
@@ -143,10 +150,11 @@ SELECT key FROM `t` ORDER BY key DESC LIMIT 10;
 (source_file
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (identifier
-            (plain_identifier))))
+      (select_clause
+        (select_list
+          (select_item
+            (identifier
+              (plain_identifier)))))
       (from_clause
         (table_ref
           (backtick_identifier))))
@@ -172,9 +180,10 @@ SELECT $x;
     (integer_literal))
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (named_expression))))))
+      (select_clause
+        (select_list
+          (select_item
+            (named_expression)))))))
 
 ================================================================================
 Null coalesce operator
@@ -187,12 +196,13 @@ SELECT key ?? 0;
 (source_file
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (binary_expression
-            left: (identifier
-              (plain_identifier))
-            right: (integer_literal)))))))
+      (select_clause
+        (select_list
+          (select_item
+            (binary_expression
+              left: (identifier
+                (plain_identifier))
+              right: (integer_literal))))))))
 
 ================================================================================
 IS NOT NULL
@@ -205,9 +215,10 @@ SELECT * FROM `t` WHERE value IS NOT NULL;
 (source_file
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (asterisk)))
+      (select_clause
+        (select_list
+          (select_item
+            (asterisk))))
       (from_clause
         (table_ref
           (backtick_identifier)))
@@ -227,9 +238,10 @@ SELECT * FROM `t` WHERE key BETWEEN 10 AND 20;
 (source_file
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (asterisk)))
+      (select_clause
+        (select_list
+          (select_item
+            (asterisk))))
       (from_clause
         (table_ref
           (backtick_identifier)))
@@ -251,9 +263,10 @@ SELECT * FROM `t` WHERE key IN (1, 2, 3);
 (source_file
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (asterisk)))
+      (select_clause
+        (select_list
+          (select_item
+            (asterisk))))
       (from_clause
         (table_ref
           (backtick_identifier)))
@@ -276,9 +289,10 @@ SELECT * FROM `t` WHERE name LIKE 'foo%';
 (source_file
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (asterisk)))
+      (select_clause
+        (select_list
+          (select_item
+            (asterisk))))
       (from_clause
         (table_ref
           (backtick_identifier)))
@@ -300,18 +314,19 @@ SELECT CASE WHEN x > 0 THEN 'pos' ELSE 'neg' END;
 (source_file
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (case_expression
-            (when_clause
-              condition: (binary_expression
-                left: (identifier
-                  (plain_identifier))
-                right: (integer_literal))
-              result: (string_literal
-                (single_quoted_string)))
-            default: (string_literal
-              (single_quoted_string))))))))
+      (select_clause
+        (select_list
+          (select_item
+            (case_expression
+              (when_clause
+                condition: (binary_expression
+                  left: (identifier
+                    (plain_identifier))
+                  right: (integer_literal))
+                result: (string_literal
+                  (single_quoted_string)))
+              default: (string_literal
+                (single_quoted_string)))))))))
 
 ================================================================================
 CAST expression
@@ -324,15 +339,16 @@ SELECT CAST(key AS String);
 (source_file
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (cast_expression
-            value: (identifier
-              (plain_identifier))
-            type: (type_expr
-              (simple_type
-                (identifier
-                  (plain_identifier))))))))))
+      (select_clause
+        (select_list
+          (select_item
+            (cast_expression
+              value: (identifier
+                (plain_identifier))
+              type: (type_expr
+                (simple_type
+                  (identifier
+                    (plain_identifier)))))))))))
 
 ================================================================================
 Lambda short form
@@ -354,12 +370,13 @@ SELECT $sq(5);
         right: (named_expression))))
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (function_call
-            function: (named_expression)
-            (argument_list
-              (integer_literal))))))))
+      (select_clause
+        (select_list
+          (select_item
+            (function_call
+              function: (named_expression)
+              (argument_list
+                (integer_literal)))))))))
 
 ================================================================================
 USE statement
@@ -413,13 +430,14 @@ SELECT true, false, NULL;
 (source_file
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (bool_literal))
-        (select_item
-          (bool_literal))
-        (select_item
-          (null_literal))))))
+      (select_clause
+        (select_list
+          (select_item
+            (bool_literal))
+          (select_item
+            (bool_literal))
+          (select_item
+            (null_literal)))))))
 
 ================================================================================
 Insert into with values
@@ -458,18 +476,19 @@ SELECT key, COUNT(*) AS cnt FROM `t` GROUP BY key HAVING COUNT(*) > 5;
 (source_file
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (identifier
-            (plain_identifier)))
-        (select_item
-          (function_call
-            function: (identifier
-              (plain_identifier))
-            (argument_list
-              (asterisk)))
-          (identifier
-            (plain_identifier))))
+      (select_clause
+        (select_list
+          (select_item
+            (identifier
+              (plain_identifier)))
+          (select_item
+            (function_call
+              function: (identifier
+                (plain_identifier))
+              (argument_list
+                (asterisk)))
+            (identifier
+              (plain_identifier)))))
       (from_clause
         (table_ref
           (backtick_identifier)))
@@ -497,19 +516,20 @@ SELECT a.key, b.val FROM `t1` AS a LEFT JOIN `t2` AS b ON a.key = b.key;
 (source_file
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (member_access
-            object: (identifier
-              (plain_identifier))
-            member: (identifier
-              (plain_identifier))))
-        (select_item
-          (member_access
-            object: (identifier
-              (plain_identifier))
-            member: (identifier
-              (plain_identifier)))))
+      (select_clause
+        (select_list
+          (select_item
+            (member_access
+              object: (identifier
+                (plain_identifier))
+              member: (identifier
+                (plain_identifier))))
+          (select_item
+            (member_access
+              object: (identifier
+                (plain_identifier))
+              member: (identifier
+                (plain_identifier))))))
       (from_clause
         (table_ref
           (backtick_identifier)
@@ -545,13 +565,15 @@ SELECT 1 UNION ALL SELECT 2;
 (source_file
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (integer_literal))))
+      (select_clause
+        (select_list
+          (select_item
+            (integer_literal)))))
     (select_body
-      (select_list
-        (select_item
-          (integer_literal))))))
+      (select_clause
+        (select_list
+          (select_item
+            (integer_literal)))))))
 
 ================================================================================
 Window function with OVER
@@ -564,17 +586,18 @@ SELECT SUM(value) OVER w FROM `t` WINDOW w AS (ORDER BY key);
 (source_file
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (over_expression
-            function: (function_call
-              function: (identifier
-                (plain_identifier))
-              (argument_list
-                (identifier
-                  (plain_identifier))))
-            window: (identifier
-              (plain_identifier)))))
+      (select_clause
+        (select_list
+          (select_item
+            (over_expression
+              function: (function_call
+                function: (identifier
+                  (plain_identifier))
+                (argument_list
+                  (identifier
+                    (plain_identifier))))
+              window: (identifier
+                (plain_identifier))))))
       (from_clause
         (table_ref
           (backtick_identifier)))
@@ -599,10 +622,11 @@ SELECT DISTINCT key FROM `t`;
 (source_file
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (identifier
-            (plain_identifier))))
+      (select_clause
+        (select_list
+          (select_item
+            (identifier
+              (plain_identifier)))))
       (from_clause
         (table_ref
           (backtick_identifier))))))
@@ -632,9 +656,10 @@ SELECT 1;
   (line_comment)
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (integer_literal))))))
+      (select_clause
+        (select_list
+          (select_item
+            (integer_literal)))))))
 
 ================================================================================
 Block comment
@@ -650,9 +675,10 @@ SELECT 1;
   (block_comment)
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (integer_literal))))))
+      (select_clause
+        (select_list
+          (select_item
+            (integer_literal)))))))
 
 ================================================================================
 Multiline string literal
@@ -671,9 +697,10 @@ SELECT $text;
       (multiline_string)))
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (named_expression))))))
+      (select_clause
+        (select_list
+          (select_item
+            (named_expression)))))))
 
 ================================================================================
 Float and typed integer literals
@@ -686,13 +713,14 @@ SELECT 3.14f, 0xFFul, 42ut;
 (source_file
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (float_literal))
-        (select_item
-          (integer_literal))
-        (select_item
-          (integer_literal))))))
+      (select_clause
+        (select_list
+          (select_item
+            (float_literal))
+          (select_item
+            (integer_literal))
+          (select_item
+            (integer_literal)))))))
 
 ================================================================================
 Flatten by
@@ -705,13 +733,14 @@ SELECT value, id FROM `t` FLATTEN BY (value);
 (source_file
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (identifier
-            (plain_identifier)))
-        (select_item
-          (identifier
-            (plain_identifier))))
+      (select_clause
+        (select_list
+          (select_item
+            (identifier
+              (plain_identifier)))
+          (select_item
+            (identifier
+              (plain_identifier)))))
       (from_clause
         (table_ref
           (backtick_identifier)))
@@ -758,9 +787,10 @@ DO $act('x');
       (named_expression))
     (select_statement
       (select_body
-        (select_list
-          (select_item
-            (named_expression))))))
+        (select_clause
+          (select_list
+            (select_item
+              (named_expression)))))))
   (do_statement
     (named_expression)
     (string_literal
@@ -777,18 +807,20 @@ SELECT * FROM (SELECT 1 AS x) AS sub;
 (source_file
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (asterisk)))
+      (select_clause
+        (select_list
+          (select_item
+            (asterisk))))
       (from_clause
         (subquery_expression
           (select_statement
             (select_body
-              (select_list
-                (select_item
-                  (integer_literal)
-                  (identifier
-                    (plain_identifier)))))))
+              (select_clause
+                (select_list
+                  (select_item
+                    (integer_literal)
+                    (identifier
+                      (plain_identifier))))))))
         alias: (identifier
           (plain_identifier))))))
 
@@ -824,13 +856,14 @@ SELECT 'a' || 'b';
 (source_file
   (select_statement
     (select_body
-      (select_list
-        (select_item
-          (binary_expression
-            left: (string_literal
-              (single_quoted_string))
-            right: (string_literal
-              (single_quoted_string))))))))
+      (select_clause
+        (select_list
+          (select_item
+            (binary_expression
+              left: (string_literal
+                (single_quoted_string))
+              right: (string_literal
+                (single_quoted_string)))))))))
 
 ================================================================================
 Drop table if exists
@@ -862,9 +895,10 @@ SELECT 1;
           (plain_identifier))))
     (select_statement
       (select_body
-        (select_list
-          (select_item
-            (integer_literal)))))))
+        (select_clause
+          (select_list
+            (select_item
+              (integer_literal))))))))
 
 ================================================================================
 Insert into with multiple modifiers in parentheses
@@ -889,9 +923,10 @@ SELECT 1;
           (double_quoted_string))))
     (select_statement
       (select_body
-        (select_list
-          (select_item
-            (integer_literal)))))))
+        (select_clause
+          (select_list
+            (select_item
+              (integer_literal))))))))
 
 ================================================================================
 Insert into with key=value modifier
@@ -912,6 +947,7 @@ SELECT 1;
         (integer_literal)))
     (select_statement
       (select_body
-        (select_list
-          (select_item
-            (integer_literal)))))))
+        (select_clause
+          (select_list
+            (select_item
+              (integer_literal))))))))

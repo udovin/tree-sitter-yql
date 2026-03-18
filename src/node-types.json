@@ -1997,7 +1997,7 @@
           "named": true
         },
         {
-          "type": "select_list",
+          "type": "select_clause",
           "named": true
         },
         {
@@ -2010,6 +2010,21 @@
         },
         {
           "type": "without_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "select_clause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "select_list",
           "named": true
         }
       ]
