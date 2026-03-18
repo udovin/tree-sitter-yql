@@ -534,25 +534,26 @@ SELECT a.key, b.val FROM `t1` AS a LEFT JOIN `t2` AS b ON a.key = b.key;
         (table_ref
           (backtick_identifier)
           alias: (identifier
-            (plain_identifier)))
-        (join_clause
+            (plain_identifier))))
+      (join_clause
+        (join_source
           (join_type)
           (table_ref
             (backtick_identifier)
             alias: (identifier
-              (plain_identifier)))
-          (join_constraint
-            (binary_expression
-              left: (member_access
-                object: (identifier
-                  (plain_identifier))
-                member: (identifier
-                  (plain_identifier)))
-              right: (member_access
-                object: (identifier
-                  (plain_identifier))
-                member: (identifier
-                  (plain_identifier))))))))))
+              (plain_identifier))))
+        (join_constraint
+          (binary_expression
+            left: (member_access
+              object: (identifier
+                (plain_identifier))
+              member: (identifier
+                (plain_identifier)))
+            right: (member_access
+              object: (identifier
+                (plain_identifier))
+              member: (identifier
+                (plain_identifier)))))))))
 
 ================================================================================
 Union all

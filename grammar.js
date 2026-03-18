@@ -129,8 +129,8 @@ module.exports = grammar({
     // _argument vs do_statement / _do_call
     [$._argument, $.do_statement],
     [$._argument, $._do_call],
-    // join clause
-    [$.join_clause],
+    // join source
+    [$.join_source],
 
     // _table_or_subquery: named_expression with optional call + alias
     [$._table_or_subquery],
@@ -862,6 +862,7 @@ module.exports = grammar({
         $.select_clause,
         optional($.without_clause),
         optional($.from_clause),
+        repeat($.join_clause),
         optional($.flatten_clause),
         optional($.where_clause),
         optional($.group_by_clause),
@@ -896,8 +897,7 @@ module.exports = grammar({
       choice(seq($.identifier, ".", $.identifier), $.identifier),
 
     // ---- FROM ----
-    from_clause: ($) =>
-      seq(kw("FROM"), $._table_or_subquery, repeat($.join_clause)),
+    from_clause: ($) => seq(kw("FROM"), $._table_or_subquery),
 
     _table_or_subquery: ($) =>
       choice(
@@ -974,7 +974,9 @@ module.exports = grammar({
       ),
 
     // ---- JOIN ----
-    join_clause: ($) =>
+    join_clause: ($) => seq($.join_source, optional($.join_constraint)),
+
+    join_source: ($) =>
       seq(
         optional($.join_type),
         kw("JOIN"),
@@ -982,7 +984,6 @@ module.exports = grammar({
         $._table_or_subquery,
         optional(seq(kw("VIEW"), $.identifier)),
         optional(seq(optional(kw("AS")), field("alias", $.identifier))),
-        optional($.join_constraint),
       ),
 
     join_type: () =>

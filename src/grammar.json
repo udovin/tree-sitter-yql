@@ -4581,6 +4581,13 @@
           ]
         },
         {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "join_clause"
+          }
+        },
+        {
           "type": "CHOICE",
           "members": [
             {
@@ -4978,13 +4985,6 @@
         {
           "type": "SYMBOL",
           "name": "_table_or_subquery"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "join_clause"
-          }
         }
       ]
     },
@@ -5835,6 +5835,27 @@
       "type": "SEQ",
       "members": [
         {
+          "type": "SYMBOL",
+          "name": "join_source"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "join_constraint"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "join_source": {
+      "type": "SEQ",
+      "members": [
+        {
           "type": "CHOICE",
           "members": [
             {
@@ -5962,18 +5983,6 @@
                   }
                 }
               ]
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "join_constraint"
             },
             {
               "type": "BLANK"
@@ -10671,7 +10680,7 @@
       "_do_call"
     ],
     [
-      "join_clause"
+      "join_source"
     ],
     [
       "_table_or_subquery"

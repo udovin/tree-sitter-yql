@@ -982,10 +982,6 @@
           "named": true
         },
         {
-          "type": "join_clause",
-          "named": true
-        },
-        {
           "type": "table_ref",
           "named": true
         }
@@ -1378,6 +1374,40 @@
   {
     "type": "join_clause",
     "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "join_constraint",
+          "named": true
+        },
+        {
+          "type": "join_source",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "join_constraint",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "join_source",
+    "named": true,
     "fields": {
       "alias": {
         "multiple": true,
@@ -1399,30 +1429,11 @@
           "named": true
         },
         {
-          "type": "join_constraint",
-          "named": true
-        },
-        {
           "type": "join_type",
           "named": true
         },
         {
           "type": "table_ref",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "join_constraint",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "expression",
           "named": true
         }
       ]
@@ -1994,6 +2005,10 @@
         },
         {
           "type": "having_clause",
+          "named": true
+        },
+        {
+          "type": "join_clause",
           "named": true
         },
         {

@@ -387,7 +387,7 @@
 (from_clause
   alias: (identifier (plain_identifier) @label))
 
-(join_clause
+(join_source
   alias: (identifier (plain_identifier) @label))
 
 ; ---------------------------------------------------------------------------
