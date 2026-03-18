@@ -783,7 +783,12 @@ module.exports = grammar({
       ),
 
     lambda_params: ($) =>
-      seq("(", commaSep(seq($.named_expression, optional("?"))), ")"),
+      seq(
+        "(",
+        commaSep(seq($.named_expression, optional("?"))),
+        optional(","),
+        ")",
+      ),
 
     lambda_body: ($) =>
       seq(
